@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	
+		<title>Inventory</title>
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" href="css/style.css">
+		
+		
+	</head>
+	
+	<body >
+		<nav class="navbar navbar-inverse noPadding">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a href="#" class="navbar-brand"> Inventario</a>
+				</div>
+				<ul class="nav navbar-right navbar-nav">
+					<li><a  href="#"><button class="btn btn-danger">Inicio</button></a></li>
+					<li><a  href="#"><button class="btn btn-success">Acerca de</button></a></li>
+					<li class="dropdown"><a  href="#" class="dropdown-toggle" data-toggle="dropdown" >Contacto<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Perfil</a></li>
+							<li><a href="#">Logout</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		
+		<div class="col-sm-2 noPadding ">
+			<ul class="navbar navbar-inverse nav sidebar">
+				<li><a href="index.html"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
+				<li><a href="#productos" data-toggle="collapse"><span class="glyphicon glyphicon-th-large"></span> Productos</a>
+					<ul id="productos" class="nav collapse">
+						<li><a href="product_list.html"><div class="col-md-1"></div><span class="glyphicon glyphicon-list"></span>Lista de productos</a></li>
+						<li><a href="add_product.html"><div class="col-md-1"></div><span class="glyphicon glyphicon-download-alt"></span>Agregar Producto</a></li>
+				 	</ul>
+				</li>
+				<li><a href="#ventas" data-toggle="collapse"><span class="glyphicon glyphicon-export"></span> Ventas</a>
+					<ul id="ventas" class="nav collapse">
+						<li><a href="sales_list.html"><div class="col-md-1"></div><span class="glyphicon glyphicon-list"></span>Ventas</a></li>
+						<li><a href="add_sales.html"><div class="col-md-1"></div><span class="glyphicon glyphicon-download-alt"></span>Agregar Venta</a></li>
+				 	</ul>
+				</li>
+				<li><a href="#pedidos" data-toggle="collapse"><span class="glyphicon glyphicon-import"></span> Pedidos</a>
+					<ul id="pedidos" class="nav collapse">
+						<li><a href="purchase_list.html"><div class="col-md-1"></div><span class="glyphicon glyphicon-list"></span>Lista de Pedidos</a></li>
+						<li><a href="add_purchase.html"><div class="col-md-1"></div><span class="glyphicon glyphicon-list"></span>Agregar Pedido</a></li>
+				 	</ul>
+				</li>
+				<li><a href="#personas" data-toggle="collapse"><span class="glyphicon glyphicon-user"></span> Personas</a>
+					<ul id="personas" class="nav collapse">
+						<li><a href="client_list.html"><div class="col-md-1"></div><span class="glyphicon glyphicon-list"></span>Lista de Clientes</a></li>
+						<li><a href="supplier_list.html"><div class="col-md-1"></div><span class="glyphicon glyphicon-list"></span>Lista de Proveedores</a></li>
+						<li><a href="add_cliente.html"><div class="col-md-1"></div><span class="glyphicon glyphicon-plus"></span>Agregar Cliente</a></li>
+						<li><a href="add_supplier.html"><div class="col-md-1"></div><span class="glyphicon glyphicon-plus"></span>Agregar Proveedor</a></li>
+				 	</ul>
+				</li>
+				<li><a href="#ajustes" data-toggle="collapse"><span class="glyphicon glyphicon-cog"></span> Ajustes</a>
+					<ul id="ajustes" class="nav collapse">
+						<li><a href="#"><div class="col-md-1"></div><span class="glyphicon glyphicon-list"></span>Lista de productos</a></li>
+						<li><a href="#"><div class="col-md-1"></div><span class="glyphicon glyphicon-list"></span>Agregar Producto</a></li>
+				 	</ul>
+				</li>
+
+
+				<li><a href="#"><span class="glyphicon glyphicon-file"></span> Reportes</a></li>
+			</ul>
+		
+		</div>
+
+		<div class="col-md-10">
+		<div class="page-header">
+					<h3>Client List</h3>
+				</div> 
+			
+			
+			<div class="col-md-12">
+				
+					<table class="table table-bordered table-striped">
+						<thead>
+							<tr class="table-head">
+								<th>S. no</th>
+								<th>Name</th>
+								<th>Company Name </th>
+								<th>Phone #</th>
+								<th>Country</th>
+								<th>City</th>
+								<th>State/Province</th>
+								<th>Office Address</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>Matt</td>
+							<td>River Wood</td>
+							<td>34234/td>
+							<td>Nepal</td>
+							<td>Khatmandu</td>
+							<td>Khat</td>
+							<td>Abc Road</td>
+							<td>
+								<div class="dropdown">
+									<button class="btn btn-success" data-toggle="dropdown">Acción <span class="caret"></span></button>
+									<ul class="dropdown-menu pull-right">
+										<li><a href="#">Detalles</a></li>
+										<li><a href="#">Editar</a></li>
+										<li><a href="#">Imprimir</a></li>
+										<li><a href="#">Eliminar</a></li>
+									</ul>
+								</div>
+							</td>
+							
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>Matt</td>
+							<td>River Wood</td>
+							<td>34234/td>
+							<td>Nepal</td>
+							<td>Khatmandu</td>
+							<td>Khat</td>
+							<td>Abc Road</td>
+							<td>
+								<div class="dropdown">
+									<button class="btn btn-success" data-toggle="dropdown">Acción <span class="caret"></span></button>
+									<ul class="dropdown-menu pull-right">
+										<li><a href="#">Detalles</a></li>
+										<li><a href="#">Editar</a></li>
+										<li><a href="#">Imprimir</a></li>
+										<li><a href="#">Eliminar</a></li>
+									</ul>
+								</div>
+							</td>
+							
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>Matt</td>
+							<td>River Wood</td>
+							<td>34234/td>
+							<td>Nepal</td>
+							<td>Khatmandu</td>
+							<td>Khat</td>
+							<td>Abc Road</td>
+							<td>
+								<div class="dropdown">
+									<button class="btn btn-success" data-toggle="dropdown">Acción <span class="caret"></span></button>
+									<ul class="dropdown-menu pull-right">
+										<li><a href="#">Detalles</a></li>
+										<li><a href="#">Editar</a></li>
+										<li><a href="#">Imprimir</a></li>
+										<li><a href="#">Eliminar</a></li>
+									</ul>
+								</div>
+							</td>
+							
+						</tr>
+						
+						<tr>
+							<td>1</td>
+							<td>Matt</td>
+							<td>River Wood</td>
+							<td>34234/td>
+							<td>Nepal</td>
+							<td>Khatmandu</td>
+							<td>Khat</td>
+							<td>Abc Road</td>
+							<td>
+								<div class="dropdown">
+									<button class="btn btn-success" data-toggle="dropdown">Acción <span class="caret"></span></button>
+									<ul class="dropdown-menu pull-right">
+										<li><a href="#">Detalles</a></li>
+										<li><a href="#">Editar</a></li>
+										<li><a href="#">Imprimir</a></li>
+										<li><a href="#">Eliminar</a></li>
+									</ul>
+								</div>
+							</td>
+							
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>Matt</td>
+							<td>River Wood</td>
+							<td>34234/td>
+							<td>Nepal</td>
+							<td>Khatmandu</td>
+							<td>Khat</td>
+							<td>Abc Road</td>
+							<td>
+								<div class="dropdown">
+									<button class="btn btn-success" data-toggle="dropdown">Acción <span class="caret"></span></button>
+									<ul class="dropdown-menu pull-right">
+										<li><a href="#">Detalles</a></li>
+										<li><a href="#">Editar</a></li>
+										<li><a href="#">Imprimir</a></li>
+										<li><a href="#">Eliminar</a></li>
+									</ul>
+								</div>
+							</td>
+							
+						</tr>
+						
+					</tbody>
+				</table>
+			</div>
+			</div>
+		</div>
+
+
+
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+ <!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
+	</body>
+</html>

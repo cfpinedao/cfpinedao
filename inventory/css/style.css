@@ -1,0 +1,27 @@
+.btn, .navbar {
+	border-radius: 0;
+}
+.navbar{
+	border:0;
+}
+.noPadding{
+	padding:0;
+	margin:0;
+}
+.sidebar{
+	height:100vh;
+
+}
+.sidebar a{
+	color:white;
+}
+.sidebar a:hover{
+	color:black;
+}
+.table-head{
+	background:maroon;
+	color:white
+}
+.form-control{
+	border-radius=0;
+}
