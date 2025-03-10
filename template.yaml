@@ -1,0 +1,221 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: java-template
+  title: Java Integration Project
+  description: Template para generar un proyecto con Java Integration.
+  tags:
+    - java
+    - maven
+spec:
+  owner: equipo-dev
+  type: service
+  parameters:
+    - title: Basic Information
+      required:
+        - organization
+        - project
+        - projectType
+        - projectNameVariable
+        - authorize
+        - javaVersion
+      properties:
+        type:
+          title: Type of template
+          type: string
+          default: 'JAVA'
+          ui:widget: hidden
+        organization:
+          title: Azure DevOps Organization
+          type: string
+          default: aviancavsts
+          ui:widget: hidden
+        project:
+          title: Azure DevOps Project
+          type: string
+          default: Integration
+          ui:widget: hidden
+        serviceType:
+          title: Service Type
+          type: string
+          description: Determina si el nombre del proyecto inicia con ESB
+          enum:
+            - ''
+            - 'ESB'
+          enumNames:
+            - '-Vacio-'
+            - 'ESB'
+          default: ''
+        projectType:
+          title: Tipo de proyecto
+          type: string
+          description: Seleccione el tipo de proyecto
+          ui:field: customField
+          enum:
+            - 'WEB'
+            - 'WS'
+            - 'WK'
+          enumNames:
+            - 'Aplicación web'
+            - 'Web service'
+            - 'Worker'
+        projectNameVariable:
+          title: Project Name Variable
+          type: string
+          description: Nombre del proyecto
+          minLength: 3
+          maxLength: 30
+          pattern: '^([a-zA-Z][a-zA-Z0-9]*)(-[a-zA-Z0-9]+)*$'
+          ui:help: 'Example: proyect-name56-200'
+        authorize:
+          title: Authorize
+          type: string
+          description: Sufijo de autorización para el nombre del repositorio
+          minLength: 3
+          maxLength: 45
+          pattern: '^([a-zA-Z][a-zA-Z0-9]*)(-[a-zA-Z0-9]+)*$'
+          ui:help: 'Example: description-functionality2-00004'
+        namespace:
+          title: Namespace
+          type: string
+          description: Namespace
+          minLength: 3
+          maxLength: 30
+          pattern: '^([a-zA-Z][a-zA-Z0-9]*)(-[a-zA-Z0-9]+)*$'
+          
+        fluidToken:
+          title: fluidToken
+          type: string
+          description: fluidToken
+          minLength: 3
+          maxLength: 30
+          
+        archetype:
+          title: Archetype
+          type: string
+          description: Seleccione el arquetipo base
+          enum:
+            - 'rest-cons-amq-prod'
+            # - 'amq'
+            # - 'camel-knative'
+            # - 'camel-nitrite'
+            # - 'grpc'
+            # - 'integration-archetype-base'
+            # - 'liquibase'
+            # - 'messaging-amqp-connector'
+            # - 'oidc-db-token-state-manager'
+        javaVersion:
+          title: Java Version
+          type: string
+          description: Select Java version
+          enum:
+            - '17'
+            - '21'
+        owner:
+          title: Responsable
+          type: string
+          description: Celula propietaria del repositorio
+          ui:field: EntityPicker
+          ui:options:
+            catalogFilter:
+              kind: Group
+        system:
+          title: System
+          type: string
+          description: Sitema al que pertenece el servicio
+          ui:field: EntityPicker
+          ui:options:
+            catalogFilter:
+              kind: System
+      errorMessage:
+        properties:
+          projectNameVariable: 'Characters minimun 3, maximum 30, can only include letters, numbers, and hyphens " - ".'
+          authorize: 'Characters minimun 3, maximum 45, and can only include letters, numbers, and hyphens " - ".'
+  steps:
+    - id: generate-name
+      name: Generate Name
+      action: debug:log
+      input:
+        message: ${{ parameters.serviceType }}${{ parameters.projectType }}-${{ parameters.projectNameVariable }}-${{ parameters.authorize }}
+    
+    - id: fetch
+      name: Download Archetype
+      action: fetch:template
+      input:
+        url: ./${{ parameters.archetype }}
+        values:
+          name: ${{ parameters.serviceType }}${{ parameters.projectType }}-${{ parameters.projectNameVariable }}-${{ parameters.authorize }}
+          organization: ${{ parameters.organization }}
+          project: ${{ parameters.project }}
+          projectNameVariable: ${{ parameters.projectNameVariable}}
+          javaVersion: ${{ parameters.javaVersion }}
+          system: ${{ parameters.system }}
+          owner: ${{ parameters.owner }}
+          namespace: ${{ parameters.namespace }}
+          fluidToken: ${{ parameters.fluidToken }}
+
+    - action: github:repo:create
+      name: Create a new GitHub repository
+      input:
+        repoUrl: github.com?repo=repo&owner=cfpinedao       
+    # - id: publish
+    #   name: Publish in Azure Repos
+    #   action: publish:azure
+    #   input:
+    #     repoUrl: dev.azure.com?repo=${{ parameters.serviceType }}${{ parameters.projectType }}-${{ parameters.projectNameVariable }}-${{ parameters.authorize }}&organization=${{ parameters.organization }}&project=${{ parameters.project }}
+    #     allowedHosts: ['dev.azure.com']
+
+    - id: create-qa-branch
+      name: Create QA Branch
+      action: git
+      input:
+        command: "checkout"
+        args: ["-b", "qa"]
+
+    - id: push-qa-branch
+      name: Push QA Branch
+      action: git
+      input:
+        command: "push"
+        args: ["-u", "origin", "qa"]
+ 
+    - id: create-release-branch
+      name: Create Release Branch
+      action: git
+      input:
+        command: "checkout"
+        args: ["-b", "release"]
+  
+    - id: push-release-branch
+      name: Push Release Branch
+      action: git
+      input:
+        command: "push"
+        args: ["-u", "origin", "release"]
+
+    - id: register
+      name: Register
+      action: catalog:register
+      input:
+        repoContentsUrl: "https://dev.azure.com/${{ parameters.organization }}/${{ parameters.project }}/_git/${{ parameters.serviceType }}${{ parameters.projectType }}-${{ parameters.projectNameVariable }}-${{ parameters.authorize }}"
+        catalogInfoPath: "/catalog-info.yaml"
+        
+    - id: createAzurePipeline
+      name: Create Azure Pipeline
+      action: azure:pipeline:create
+      input:
+        organization: ${{ parameters.organization }}
+        project: ${{ parameters.project }}
+        folder: "template/pipeline"
+        name: ${{ parameters.serviceType }}${{ parameters.projectType }}-${{ parameters.projectNameVariable }}-${{ parameters.authorize }}
+        repositoryId: ${{ steps.publish.output.repositoryId }}
+        repositoryName: ${{ parameters.serviceType }}${{ parameters.projectType }}-${{ parameters.projectNameVariable }}-${{ parameters.authorize }}
+        yamlPath: template/pipeline/CI.yaml
+
+  output:
+    links:
+      - title: Repository
+        url: ${{ steps['publish'].output.remoteUrl }}
+      - title: Open in catalog
+        icon: catalog
+        entityRef: ${{ steps['register'].output.entityRef }}
