@@ -157,7 +157,7 @@ spec:
     - action: github:repo:create
       name: Create a new GitHub repository
       input:
-        repoUrl: github.com?repo=repo&owner=cfpinedao       
+        repoUrl: github.com?repo=${{ parameters.serviceType }}${{ parameters.projectType }}-${{ parameters.projectNameVariable }}-${{ parameters.authorize }}&owner=cfpinedao       
     # - id: publish
     #   name: Publish in Azure Repos
     #   action: publish:azure
